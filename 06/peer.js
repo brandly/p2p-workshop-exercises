@@ -6,10 +6,10 @@ const username = process.argv[2]
 const me = process.argv[3]
 const peers = process.argv.slice(4)
 
-const client = topology(me, peers)
+const swarm = topology(me, peers)
 const activeSockets = new streamSet()
 
-client.on('connection', (socket, peer) => {
+swarm.on('connection', (socket, peer) => {
   console.log('connected to', peer)
 
   socket = jsonStream(socket)
@@ -21,12 +21,12 @@ client.on('connection', (socket, peer) => {
 })
 
 process.stdin.on('data', (data) => {
-  data = data.toString().trim()
+  message = data.toString().trim()
 
   activeSockets.forEach(socket => {
     socket.write({
       username,
-      message: data
+      message
     })
   })
 })
