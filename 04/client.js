@@ -3,7 +3,6 @@
 const net = require('net')
 const config = require('./config')
 const jsonStream = require('duplex-json-stream')
-const registerDns = require('register-multicast-dns')
 
 const serverNickname = process.argv[2]
 const serverAddress = `${serverNickname}.local`

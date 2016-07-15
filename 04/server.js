@@ -1,13 +1,13 @@
 const net = require('net')
 const config = require('./config')
-const streamSet = require('stream-set')
+const StreamSet = require('stream-set')
 const jsonStream = require('duplex-json-stream')
 const registerDns = require('register-multicast-dns')
 
 const serverNickname = process.argv[2]
 registerDns(serverNickname)
 
-const activeClients = new streamSet()
+const activeClients = new StreamSet()
 
 const server = net.createServer((client) => {
   client = jsonStream(client)

@@ -1,5 +1,5 @@
 const topology = require('fully-connected-topology')
-const streamSet = require('stream-set')
+const StreamSet = require('stream-set')
 const jsonStream = require('duplex-json-stream')
 
 const username = process.argv[2]
@@ -7,7 +7,7 @@ const me = process.argv[3]
 const peers = process.argv.slice(4)
 
 const swarm = topology(me, peers)
-const activeSockets = new streamSet()
+const activeSockets = new StreamSet()
 
 swarm.on('connection', (socket, peer) => {
   console.log('connected to', peer)

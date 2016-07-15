@@ -1,9 +1,9 @@
 const net = require('net')
 const config = require('./config')
-const streamSet = require('stream-set')
+const StreamSet = require('stream-set')
 const jsonStream = require('duplex-json-stream')
 
-const activeClients = new streamSet()
+const activeClients = new StreamSet()
 
 const server = net.createServer((client) => {
   client = jsonStream(client)

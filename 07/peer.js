@@ -1,7 +1,7 @@
 'use strict'
 
 const topology = require('fully-connected-topology')
-const streamSet = require('stream-set')
+const StreamSet = require('stream-set')
 const jsonStream = require('duplex-json-stream')
 const uuid = require('node-uuid')
 
@@ -10,7 +10,7 @@ const me = process.argv[3]
 const peers = process.argv.slice(4)
 
 const swarm = topology(me, peers)
-const activeSockets = new streamSet()
+const activeSockets = new StreamSet()
 
 const clientId = uuid.v4()
 let messageCount = 0
@@ -19,10 +19,6 @@ const clientToCount = {}
 
 function hasntSeen (data) {
   return typeof clientToCount[data.clientId] === 'undefined' || clientToCount[data.clientId] < data.count
-}
-
-function isUndefined (val) {
-  return typeof val === 'undefined'
 }
 
 swarm.on('connection', (socket, peer) => {
