@@ -21,7 +21,7 @@ swarm.on('connection', (socket, peer) => {
 })
 
 process.stdin.on('data', (data) => {
-  message = data.toString().trim()
+  const message = data.toString().trim()
 
   activeSockets.forEach(socket => {
     socket.write({
