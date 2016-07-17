@@ -1,5 +1,3 @@
 node_modules/
-
-09/test.db
-10/test.db
+*.db
 
