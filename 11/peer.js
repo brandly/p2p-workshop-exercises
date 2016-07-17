@@ -12,7 +12,8 @@ const peers = process.argv.slice(3)
 
 registerDns(username)
 const swarm = topology(toAddress(username), peers.map(toAddress))
-const logs = scuttleup(levelup(username + '.db'))
+const db = levelup(username + '.db')
+const logs = scuttleup(db, { valueEncoding: 'json' })
 
 function toAddress (username) {
   return username + '.local:' + hashToPort(username)
@@ -27,10 +28,12 @@ swarm.on('connection', (socket, peer) => {
 logs
   .createReadStream({live: true})
   .on('data', (data) => {
-    console.log(data.entry.toString())
+    console.log(`${data.entry.username}> ${data.entry.message}`)
   })
 
 process.stdin.on('data', (data) => {
-  const message = data.toString().trim()
-  logs.append(`${username}> ${message}`)
+  logs.append({
+    username,
+    message: data.toString().trim()
+  })
 })
